@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+	--background-color: #fff;
+	--background-light: #fff;
+	--shadow-color: rgba(0,0,0,0.2);
+	--primary-color: rgb(255,0,86);
+	--text-color: #0a0a0a;
+	--text-light: #575757;
+	--font-size: 16px;
+	--animation-speed: 1;
+}
+
+@function getAnimationDuration($duration: number) {
+	@return calc($duration * var(--animation-speed));
+}
+
+a {
+	text-decoration: none
+}
+
+@import 'partials/navbar.scss';
