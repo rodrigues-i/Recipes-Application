@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+body {
+	font-size: var(--font-size);
+	font-family: 'Roboto', sans-serif;
+	padding-top: 55px;
+	background-color: var(--background-color);
+}
+
 :root {
 	--background-color: #fff;
 	--background-light: #fff;
@@ -23,4 +30,26 @@ a {
 	text-decoration: none
 }
 
+@import 'partials/animations.scss';
 @import 'partials/navbar.scss';
+
+.container {
+	padding-inline: 25vw;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding-inline: 6vw;
+	}
+	
+	.navbar {
+		.nav-links {
+			display: none;
+		}
+
+		.sidebar-button {
+			display: block;
+		}
+	}
+
+}
