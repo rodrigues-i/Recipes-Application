@@ -1,18 +1,29 @@
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
+import Recipes from './pages/Recipes'
+import Settings from './pages/Settings'
 import FooterSection from './components/FooterSection'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom'
 
 function App() {
 
 
   return (
-    <div>
+    <Router>
       <Navbar />
       <div className='container main'>
-        <Home/>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/recipes' element={<Recipes />} />
+          <Route path='/settings' element={<Settings />} />
+        </Routes>
       </div>
       <FooterSection />
-    </div>
+    </Router>
   )
 }
 
