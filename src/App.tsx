@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
+import FooterSection from './components/FooterSection'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <div className='container main'>
         <Home/>
       </div>
+      <FooterSection />
     </div>
   )
 }
