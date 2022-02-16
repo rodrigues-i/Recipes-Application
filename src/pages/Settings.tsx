@@ -52,14 +52,14 @@ let selectedFontSize = () => {
 };
 
 let selectedAnimationSpeed = () => {
-	let saved = localStorage.getItem('animationSpeed')
-	if(saved) {
-		const value = JSON.parse(saved)
-		return value
-	}else {
-		return 1
-	}
-}
+    let saved = localStorage.getItem('animationSpeed');
+    if (saved) {
+        const value = JSON.parse(saved);
+        return value;
+    } else {
+        return 1;
+    }
+};
 
 const Settings = () => {
     const [theme, setTheme] = useState(selectedTheme);
@@ -79,8 +79,7 @@ const Settings = () => {
         localStorage.setItem('primaryColor', JSON.stringify(primaryColor));
         localStorage.setItem('theme', JSON.stringify(theme));
         localStorage.setItem('fontSize', JSON.stringify(fontSize));
-        localStorage.setItem('animationSpeed', JSON.stringify(animationSpeed))
-
+        localStorage.setItem('animationSpeed', JSON.stringify(animationSpeed));
     }, [settings]);
 
     const themes = [
@@ -132,19 +131,21 @@ const Settings = () => {
         },
     ];
 
-    function changeTheme(i) {
+
+    function changeTheme(i: number) {
         const _theme = { ...themes[i] };
+        console.log(_theme);
         setTheme(i === 0 ? 'light' : 'dark');
         // update settings
         let _settings = { ...settings };
         for (let key in _theme) {
-            _settings[key] = _theme[key];
+            _settings[key] = _theme[key as keyof typeof _theme];
         }
 
         setSettings(_settings);
     }
 
-    const changeColor = (i) => {
+    const changeColor = (i: number) => {
         const _color = primaryColors[i];
         let _settings = { ...settings };
         _settings['--primary-color'] = _color;
@@ -152,7 +153,7 @@ const Settings = () => {
         setPrimaryColor(i);
     };
 
-    function changeFontSize(i) {
+    function changeFontSize(i: number) {
         let _size = fontSizes[i];
         let _settings = { ...settings };
         _settings['--font-size'] = _size.value;
@@ -160,7 +161,7 @@ const Settings = () => {
         setSettings(_settings);
     }
 
-    const changeAnimationSpeed = (i) => {
+    const changeAnimationSpeed = (i: number) => {
         let _speed = animationSpeeds[i];
         let _settings = { ...settings };
         _settings['--animation-speed'] = _speed.value;
