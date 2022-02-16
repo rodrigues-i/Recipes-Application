@@ -3,15 +3,15 @@ import CustomImage from './CustomImage'
 
 const HeroSection = () => {
 	const images = [
-		'src//img/gallery/img_1.jpg',
-		'src/img/gallery/img_2.jpg',
-		'src/img/gallery/img_3.jpg',
-		'src/img/gallery/img_4.jpg',
-		'src/img/gallery/img_5.jpg',
-		'src/img/gallery/img_6.jpg',
-		'src/img/gallery/img_7.jpg',
-		'src/img/gallery/img_8.jpg',
-		'src/img/gallery/img_9.jpg'
+		'/assets/img/gallery/img_1.jpg',
+		'/assets/img/gallery/img_2.jpg',
+		'/assets/img/gallery/img_3.jpg',
+		'/assets/img/gallery/img_4.jpg',
+		'/assets/img/gallery/img_5.jpg',
+		'/assets/img/gallery/img_6.jpg',
+		'/assets/img/gallery/img_7.jpg',
+		'/assets/img/gallery/img_8.jpg',
+		'/assets/img/gallery/img_9.jpg'
 	]
 
 
