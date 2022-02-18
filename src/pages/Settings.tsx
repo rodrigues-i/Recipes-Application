@@ -1,145 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { themes, primaryColors, fontSizes, animationSpeeds } from '../settingStyles';
+import { settingsProps } from '../App';
 
-let settings_values = () => {
-    const saved = localStorage.getItem('settings');
-    if (saved) {
-        const jads = JSON.parse(saved);
-        return jads;
-    } else {
-        return {
-            '--background-color': '#fff',
-            '--background-light': '#fff',
-            '--primary-color': 'rgb(255,0,86)',
-            '--shadow-color': 'rgba(0,0,0,0.2',
-            '--text-color': '#0a0a0a',
-            '--text-light': '#575757',
-            '--font-size': '16px',
-            '--animation-speed': 1,
-        };
-    }
+type Props = {
+    settings: settingsProps;
+    setSettings: React.Dispatch<React.SetStateAction<settingsProps>>;
+    theme: 'light' | 'dark';
+    setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>;
+    primaryColor: number;
+    setPrimaryColor: React.Dispatch<React.SetStateAction<number>>;
+    fontSize: number;
+    setFontSize: React.Dispatch<React.SetStateAction<number>>;
+    animationSpeed: string;
+    setAnimationSpeed: React.Dispatch<React.SetStateAction<string>>;
 };
 
-let selectedColorIndex = () => {
-    const saved = localStorage.getItem('primaryColor');
-    if (saved) {
-        const jhsd = JSON.parse(saved);
-        return jhsd;
-    } else {
-        return 0;
-    }
-};
-
-let selectedTheme = () => {
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-        const value = JSON.parse(saved);
-        return value;
-    } else {
-        return 'light';
-    }
-};
-
-let selectedFontSize = () => {
-    const saved = localStorage.getItem('fontSize');
-    if (saved) {
-        const value = JSON.parse(saved);
-        return value;
-    } else {
-        return 1;
-    }
-};
-
-let selectedAnimationSpeed = () => {
-    let saved = localStorage.getItem('animationSpeed');
-    if (saved) {
-        const value = JSON.parse(saved);
-        return value;
-    } else {
-        return 1;
-    }
-};
-
-const Settings = () => {
-    const [theme, setTheme] = useState(selectedTheme);
-    const [primaryColor, setPrimaryColor] = useState(selectedColorIndex);
-    const [animationSpeed, setAnimationSpeed] = useState(selectedAnimationSpeed);
-    const [fontSize, setFontSize] = useState(selectedFontSize);
-
-    const [settings, setSettings] = useState(settings_values);
-
+const Settings: React.FC<Props> = ({
+    settings,
+    setSettings,
+    theme,
+    setTheme,
+    primaryColor,
+    setPrimaryColor,
+    fontSize,
+    setFontSize,
+    animationSpeed,
+    setAnimationSpeed,
+}) => {
     useEffect(() => {
-        const root = document.documentElement;
-        for (let key in settings) {
-            root.style.setProperty(key, settings[key]);
-        }
-
         localStorage.setItem('settings', JSON.stringify(settings));
-        localStorage.setItem('primaryColor', JSON.stringify(primaryColor));
-        localStorage.setItem('theme', JSON.stringify(theme));
-        localStorage.setItem('fontSize', JSON.stringify(fontSize));
-        localStorage.setItem('animationSpeed', JSON.stringify(animationSpeed));
     }, [settings]);
-
-    const themes = [
-        {
-            '--background-color': '#fff',
-            '--background-light': '#fff',
-            '--shadow-color': 'rgba(0,0,0,0.2)',
-            '--text-color': '#0a0a0a',
-            '--text-light': '#575757',
-        },
-        {
-            '--background-color': 'rgb(29,29,29)',
-            '--background-light': 'rgb(77,77,77)',
-            '--shadow-color': 'rgba(0,0,0,0.2)',
-            '--text-color': '#ffffff',
-            '--text-light': '#eceaea',
-        },
-    ];
-
-    const primaryColors = ['rgb(255,0,86)', 'rgb(33,150,243)', 'rgb(255,193,7)', 'rgb(0,200,83)', 'rgb(156,39,176)'];
-
-    const fontSizes = [
-        {
-            title: 'Small',
-            value: '12px',
-        },
-        {
-            title: 'Medium',
-            value: '16px',
-        },
-        {
-            title: 'Large',
-            value: '20px',
-        },
-    ];
-
-    const animationSpeeds = [
-        {
-            title: 'Slow',
-            value: 2,
-        },
-        {
-            title: 'Medium',
-            value: 1,
-        },
-        {
-            title: 'Fast',
-            value: 0.5,
-        },
-    ];
-
 
     function changeTheme(i: number) {
         const _theme = { ...themes[i] };
-        console.log(_theme);
         setTheme(i === 0 ? 'light' : 'dark');
         // update settings
         let _settings = { ...settings };
         for (let key in _theme) {
-            _settings[key] = _theme[key as keyof typeof _theme];
+            _settings[key as keyof typeof _settings] = _theme[key as keyof typeof _theme];
         }
 
         setSettings(_settings);
@@ -164,8 +64,8 @@ const Settings = () => {
     const changeAnimationSpeed = (i: number) => {
         let _speed = animationSpeeds[i];
         let _settings = { ...settings };
-        _settings['--animation-speed'] = _speed.value;
-        setAnimationSpeed(i);
+        _settings['--animation-speed'] = String(_speed.value);
+        setAnimationSpeed(String(i));
         setSettings(_settings);
     };
 
@@ -230,7 +130,7 @@ const Settings = () => {
                     {animationSpeeds.map((speed, index) => (
                         <button key={index} className='btn' onClick={() => changeAnimationSpeed(index)}>
                             {speed.title}
-                            {animationSpeed === index && (
+                            {parseInt(animationSpeed) === index && (
                                 <span>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
